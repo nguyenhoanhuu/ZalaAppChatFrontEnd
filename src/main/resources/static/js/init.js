@@ -8,18 +8,19 @@ import {
 let userAvatarTemporary = "";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCtvKlXSWkHh5CN3ST4DxiLu6rxVGZDiJ4",
-  authDomain: "zala-chatapp.firebaseapp.com",
-  projectId: "zala-chatapp",
-  storageBucket: "zala-chatapp.appspot.com",
-  messagingSenderId: "721545788182",
-  appId: "1:721545788182:web:70a313a4c5934f164f2e37"
+  apiKey: "AIzaSyB0FKXbSt_rK7wRNtlz0opywxtoGYFmtLg",
+  authDomain: "zala-d8638.firebaseapp.com",
+  projectId: "zala-d8638",
+  storageBucket: "zala-d8638.appspot.com",
+  messagingSenderId: "535358142860",
+  appId: "1:535358142860:web:546bc106e7a66b68b3fea9",
+  measurementId: "G-V6JFR21WZC"
 };
 import emoji from "../assets/images/emoji2.json" assert { type: "json" };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 // Initialize Cloud Storage and get a reference to the service
-const storage = getStorage(app, "gs://zala-chatapp.appspot.com");
+const storage = getStorage(app, "gs://zala-d8638.appspot.com");
 $(document).ready(function () {
   renderListEmoji(emoji);
   $("#sendBtn").on("click", (input) => {
