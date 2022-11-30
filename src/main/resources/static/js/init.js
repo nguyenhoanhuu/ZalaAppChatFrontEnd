@@ -4,6 +4,7 @@ import {
   ref,
   getDownloadURL,
   uploadBytesResumable,
+  getMetadata,
 } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-storage.js";
 let userAvatarTemporary = "";
 
@@ -14,7 +15,7 @@ const firebaseConfig = {
   storageBucket: "zala-d8638.appspot.com",
   messagingSenderId: "535358142860",
   appId: "1:535358142860:web:546bc106e7a66b68b3fea9",
-  measurementId: "G-V6JFR21WZC"
+  measurementId: "G-V6JFR21WZC",
 };
 import emoji from "../assets/images/emoji2.json" assert { type: "json" };
 // Initialize Firebase
@@ -23,6 +24,10 @@ const app = initializeApp(firebaseConfig);
 const storage = getStorage(app, "gs://zala-d8638.appspot.com");
 $(document).ready(function () {
   renderListEmoji(emoji);
+  $("#inputFile").on("change", (input) => {
+    const files = input.target.files[0];
+    handleSendFile(files);
+  });
   $("#sendBtn").on("click", (input) => {
     switch (filesArr.length) {
       case 0:
@@ -216,4 +221,68 @@ function renderListEmoji(listEmoji) {
     `;
   });
   $("#emoji-list").append(emojiRender);
+}
+function handleSendFile(file) {
+  const storageRef = ref(storage, file.name);
+  const uploadTask = uploadBytesResumable(storageRef, file);
+
+  uploadTask.on(
+    "state_changed",
+    (snapshot) => {
+      // Observe state change events such as progress, pause, and resume
+      // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log("Upload is " + progress + "% done");
+      switch (snapshot.state) {
+        case "paused":
+          console.log("Upload is paused");
+          break;
+        case "running":
+          console.log("Upload is running");
+          break;
+      }
+    },
+    (error) => {
+      // Handle unsuccessful uploads
+    },
+    () => {
+      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+        getMetadata(storageRef)
+          .then((metadata) => {
+            sendMessage(
+              myMemberInConversationSelected,
+              "file",
+              metadata.name +
+                "+" +
+                formatSizeUnits(metadata.size) +
+                "+" +
+                downloadURL,
+              conversationSelected
+            );
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+
+      // Handle successful uploads on complete
+      // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+    }
+  );
+}
+function formatSizeUnits(bytes) {
+  if (bytes >= 1073741824) {
+    bytes = (bytes / 1073741824).toFixed(2) + " GB";
+  } else if (bytes >= 1048576) {
+    bytes = (bytes / 1048576).toFixed(2) + " MB";
+  } else if (bytes >= 1024) {
+    bytes = (bytes / 1024).toFixed(2) + " KB";
+  } else if (bytes > 1) {
+    bytes = bytes + " bytes";
+  } else if (bytes == 1) {
+    bytes = bytes + " byte";
+  } else {
+    bytes = "0 bytes";
+  }
+  return bytes;
 }

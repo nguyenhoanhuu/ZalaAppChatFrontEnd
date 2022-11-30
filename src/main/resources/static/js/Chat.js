@@ -51,3 +51,76 @@ function handleSelectImage(file) {
 function appendEmoji(emoji) {
   $("#message-to-send").val($("#message-to-send").val() + `${emoji}`);
 }
+$("#oldpassword_changePassword_modal").blur(() => {
+  // console.log(user);
+  let oldPassword = document.getElementById(
+    "oldpassword_changePassword_modal"
+  ).value;
+  let bool = false;
+  $.ajax({
+    url: `${api}/account/filter?phoneNumber=${user.phoneNumber.slice(-11)}`,
+    type: "GET",
+    async: true,
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+      xhr.setRequestHeader("Accept", "application/json");
+      xhr.setRequestHeader("Content-Type", "application/json");
+    },
+    success: function (result) {
+      mainAccount = result;
+      if (result.password == oldPassword) {
+        bool = true;
+      }
+      if (bool) {
+        $("#errorPassword").css("display", "none");
+      } else {
+        $("#errorPassword").css("display", "block");
+      }
+    },
+    error: function (textStatus, errorThrown) {
+      console.log("Error: " + textStatus + errorThrown);
+      return false;
+    },
+  });
+});
+$("#btnChangePassword").click(() => {
+  let newPasssword = $("#password").val();
+
+  // const formUpdateAccount = {
+  //   id: account.id,
+  //   phoneNumber: account.phoneNumber,
+  //   password: newPasssword,
+  //   userId: account.userId,
+  // };
+  mainAccount.password = newPasssword;
+
+  $.ajax({
+    type: "PUT",
+    url: `${api}/account`,
+    data: JSON.stringify(mainAccount),
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+      xhr.setRequestHeader("Accept", "application/json");
+      xhr.setRequestHeader("Content-Type", "application/json");
+    },
+    success: function () {
+      alert("Cap nhat thanh cong");
+      // window.location.href = `${client}/login`;
+    },
+    async: true,
+  });
+});
+const checkConfirmPassword = () => {
+  let password = document.getElementById("password").value;
+  let confirmPassword = document.getElementById("confirmPassword").value;
+
+  return password === confirmPassword ? true : false;
+};
+
+$("#confirmPassword").blur(() => {
+  if (checkConfirmPassword()) {
+    $("#errorPasswordConfirm").css("display", "none");
+  } else {
+    $("#errorPasswordConfirm").css("display", "block");
+  }
+});

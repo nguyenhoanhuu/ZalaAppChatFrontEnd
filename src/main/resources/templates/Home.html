@@ -131,8 +131,10 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#">Profile <i
                                     class="ri-profile-line float-end text-muted"></i></a>
-                            <a class="dropdown-item" href="#">Setting <i
-                                    class="ri-settings-3-line float-end text-muted"></i></a>
+                            <button type="button" class="dropdown-item" data-bs-toggle="modal"
+                                data-bs-target="#change-password-modal">
+                                Change Password <i class="ri-settings-3-line float-end text-muted"></i>
+                            </button>
                             <div class="dropdown-divider"></div>
                             <!-- NHH: handle tag a onclick Logout -->
                             <a class="dropdown-item" href="#" onclick="return getLogout();">Log out <i
@@ -142,6 +144,192 @@
                 </ul>
             </div>
             <!-- Side menu user -->
+        </div>
+        <div class="modal fade" id="change-password-modal" tabindex="-1" role="dialog"
+            aria-labelledby="change-password-modalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title font-size-16" id="change-password-modalLabel">
+                            Đổi Mật Khẩu Tài Khoản
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <form>
+                            <div class="mb-4">
+                                <label for="addgroupname-input" class="form-label">nhập lại mật khẩu cũ</label>
+                                <input type="text" class="form-control" id="oldpassword_changePassword_modal"
+                                    placeholder="nhập lại mật khẩu cũ" />
+                                <span id="errorPassword" class="form-label" style="
+                                        color: red;
+                                        display: none;
+                                    ">Sai mật khẩu </span>
+                            </div>
+                            <div class="mb-4">
+                                <label for="addgroupname-input" class="form-label">Mật khẩu mới</label>
+                                <input type="password" class="form-control" id="password"
+                                    placeholder="Nhập mật khẩu mới" />
+                            </div>
+                            <div class="mb-4">
+                                <label for="addgroupname-input" class="form-label">Xác nhận mật khẩu</label>
+                                <input type="password" class="form-control" id="confirmPassword"
+                                    placeholder="Xác nhận mật khẩu" />
+                                <span id="errorPasswordConfirm" class="form-label" style="color: red; display: none">
+                                    Mật khẩu không hợp lệ</span>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link" data-bs-dismiss="modal">
+                            Đóng
+                        </button>
+                        <button id="btnChangePassword" type="button" class="btn btn-primary">
+                            Xác nhận
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="addFriendInGroup-Modal" tabindex="-1" role="dialog"
+            aria-labelledby="addgroup-exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title font-size-16" id="addgroup-exampleModalLabel">Thêm vào
+                            nhóm</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        </button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <form>
+                            <!-- <div class="mb-4">
+                                                <label for="addgroupname-input" class="form-label">Nhập tên cần tìm</label>
+                                                <input type="text" class="form-control" id="searchNameFriend"
+                                                    placeholder="Nhập tên cần tìm">
+                                                <button 
+                                                    class="btn btn-success" style="width: 100%;text-align: center;">Tìm
+                                                    kiếm</button>
+                                            </div> -->
+                            <div class="mb-4">
+                                <!-- <ul id="contactsCreateGroup123" class="list-unstyled contact-list">
+                                                    <li>
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input" id="memberCheck1" checked>
+                                                    <label class="form-check-label" for="memberCheck1">Albert Rodarte</label>
+                                                </div>
+                                                    </li>
+                                                </ul> -->
+                                <!-- <label class="form-label">Group Members</label> -->
+                                <div class="mb-3">
+                                    <button onclick="return handleFindMemberUsingAddInGroup();"
+                                        class="btn btn-light btn-sm" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#groupmembercollapse" aria-expanded="false"
+                                        aria-controls="groupmembercollapse">
+                                        Hiển thị danh sách bạn bè
+                                    </button>
+                                </div>
+
+                                <!-- <div class="collapse" id="groupmembercollapse"> -->
+                                <!-- <div class="card border">  -->
+                                <!-- <div class="card-header">
+                                                    <h5 class="font-size-15 mb-0"></h5>
+                                                    </div> -->
+                                <div class="card-body p-2">
+                                    <div data-simplebar style="max-height: 150px;">
+                                        <div>
+                                            <ul id="memberaddInGroup" class="list-unstyled contact-list">
+                                                <!--  <li>
+                                                                    <div class="form-check">
+                                                                        <input type="checkbox" class="form-check-input" id="memberCheck1" checked>
+                                                                        <label class="form-check-label" for="memberCheck1">Albert Rodarte</label>
+                                                                    </div>
+                                                                </li> -->
+                                                <!-- <li>
+                                                                    <div class="form-check">
+                                                                        <input type="checkbox" class="form-check-input" id="memberCheck1" checked>
+                                                                        <label class="form-check-label" for="memberCheck1">Albert Rodarte</label>
+                                                                    </div>
+                                                                </li>  -->
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- </div> -->
+                                <!-- </div> -->
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link" data-bs-dismiss="modal">Close</button>
+                        <button id="btnAddFriendInGroupChat" type="button" class="btn btn-primary">Add
+                            Groups</button>
+                    </div>
+                    <!-- onclick="handleCreateGroup()" -->
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="changeAdmin-exampleModal" tabindex="-1" role="dialog"
+            aria-labelledby="addgroup-exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title font-size-16" id="addgroup-exampleModalLabel">Chuyển Admin</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        </button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <form>
+                            <div class="mb-4">
+                                <label class="form-label">Group Members</label>
+                                <div class="mb-3">
+                                    <button class="btn btn-light btn-sm" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#groupmembercollapse" aria-expanded="false"
+                                        aria-controls="groupmembercollapse">
+                                        Select Members
+                                    </button>
+                                </div>
+
+                                <div class="collapse" id="groupmembercollapse">
+                                    <div class="card border">
+                                        <div class="card-header">
+                                            <h5 class="font-size-15 mb-0">Contacts</h5>
+                                        </div>
+                                        <div class="card-body p-2">
+                                            <div data-simplebar style="max-height: 150px;">
+                                                <div>
+                                                    <ul id="membersInGroupModalChangeAdmin"
+                                                        class="list-unstyled contact-list">
+                                                        <!-- <li>
+                                                                                <div class="form-check">
+                                                                                    <input type="radio" name="selectAdmin" value="1" class="form-check-input" id="memberCheck1">
+                                                                                    <label class="form-check-label" for="memberCheck1">Albert Rodarte</label>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li>
+                                                                                <div class="form-check">
+                                                                                    <input type="radio" name="selectAdmin" value="2" class="form-check-input" id="memberCheck2">
+                                                                                    <label class="form-check-label" for="memberCheck1">Albert</label>
+                                                                                </div>
+                                                                            </li> -->
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link" data-bs-dismiss="modal">Close</button>
+                        <button onclick="handleChangeAdmin()" id="btnCreateGroup" type="button"
+                            class="btn btn-primary">Chuyển quyền admin</button>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- end left sidebar-menu -->
 
@@ -1526,7 +1714,7 @@
                     <div class="chat-input-section p-3 p-lg-4 border-top mb-0 ">
 
                         <div class="d-flex position-absolute w-100" id="listImageSelectTemporary"
-                            style="background-color: #fff; bottom:-80px ">
+                            style="background-color: #fff; bottom:80px ">
                         </div>
                         <div class="row g-0">
 
@@ -1560,6 +1748,17 @@
                                                 <label>
                                                     <i class="ri-attachment-line"></i>
                                                     <input type="file" multiple name="inputImg" id="inputImg"
+                                                        style="display: none;">
+                                                </label>
+                                            </button>
+                                        </li>
+                                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="upload file ">
+                                            <button type="button"
+                                                class="btn btn-link text-decoration-none font-size-16 btn-lg waves-effect position-relative ">
+                                                <label>
+                                                    <i class="fas fa-file-import"></i>
+                                                    <input type="file" name="inputFile" id="inputFile"
                                                         style="display: none;">
                                                 </label>
                                             </button>
@@ -1614,84 +1813,7 @@
                         </div>
 
                         <!-- Start add group Modal -->
-                        <div class="modal fade" id="addFriendInGroup-Modal" tabindex="-1" role="dialog"
-                            aria-labelledby="addgroup-exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title font-size-16" id="addgroup-exampleModalLabel">Thêm vào
-                                            nhóm</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close">
-                                        </button>
-                                    </div>
-                                    <div class="modal-body p-4">
-                                        <form>
-                                            <!-- <div class="mb-4">
-                                                <label for="addgroupname-input" class="form-label">Nhập tên cần tìm</label>
-                                                <input type="text" class="form-control" id="searchNameFriend"
-                                                    placeholder="Nhập tên cần tìm">
-                                                <button 
-                                                    class="btn btn-success" style="width: 100%;text-align: center;">Tìm
-                                                    kiếm</button>
-                                            </div> -->
-                                            <div class="mb-4">
-                                                <!-- <ul id="contactsCreateGroup123" class="list-unstyled contact-list">
-                                                    <li>
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input" id="memberCheck1" checked>
-                                                    <label class="form-check-label" for="memberCheck1">Albert Rodarte</label>
-                                                </div>
-                                                    </li>
-                                                </ul> -->
-                                                <!-- <label class="form-label">Group Members</label> -->
-                                        <div class="mb-3">
-                                            <button onclick="return handleFindMemberUsingAddInGroup();" class="btn btn-light btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#groupmembercollapse" aria-expanded="false" aria-controls="groupmembercollapse">
-                                                    Hiển thị danh sách bạn bè
-                                                </button>
-                                        </div>
-                                            
-                                        <!-- <div class="collapse" id="groupmembercollapse"> -->
-                                            <!-- <div class="card border">  -->
-                                                <!-- <div class="card-header">
-                                                    <h5 class="font-size-15 mb-0"></h5>
-                                                    </div> -->
-                                                <div class="card-body p-2">
-                                                    <div data-simplebar style="max-height: 150px;">
-                                                        <div>
-                                                            <ul id="memberaddInGroup" class="list-unstyled contact-list">
-                                                                <!--  <li>
-                                                                    <div class="form-check">
-                                                                        <input type="checkbox" class="form-check-input" id="memberCheck1" checked>
-                                                                        <label class="form-check-label" for="memberCheck1">Albert Rodarte</label>
-                                                                    </div>
-                                                                </li> -->
-                                                                <!-- <li>
-                                                                    <div class="form-check">
-                                                                        <input type="checkbox" class="form-check-input" id="memberCheck1" checked>
-                                                                        <label class="form-check-label" for="memberCheck1">Albert Rodarte</label>
-                                                                    </div>
-                                                                </li>  -->
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
 
-                                            <!-- </div> -->
-                                        <!-- </div> -->
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-link"
-                                            data-bs-dismiss="modal">Close</button>
-                                        <button id="btnAddFriendInGroupChat" type="button" class="btn btn-primary">Add
-                                            Groups</button>
-                                    </div>
-                                    <!-- onclick="handleCreateGroup()" -->
-                                </div>
-                            </div>
-                        </div>
 
                         <!-- End add group Modal -->
 
@@ -1747,16 +1869,18 @@
                             </div>
                             <div class="d-flex justify-content-center">
                                 <div class="text-start ">
-                                    <button id="leaveConversation" type="button" onclick="return getLeaveConversation();"
-                                        class="btn btn-primary">Rời nhóm</button>
+                                    <button id="leaveConversation" type="button"
+                                        onclick="return getLeaveConversation();" class="btn btn-primary">Rời
+                                        nhóm</button>
                                 </div>
                                 <div class="text-start ">
                                     <button id="disbandingTheGroup" type="button" onclick="return disbandingtheGroup();"
                                         class="btn btn-primary">Giản tán nhóm</button>
                                 </div>
                                 <div class="text-start ">
-                                    <button id="changeAdmin" type="button"
-                                        class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changeAdmin-exampleModal">Chuyển admin</button>
+                                    <button id="changeAdmin" type="button" class="btn btn-primary"
+                                        data-bs-toggle="modal" data-bs-target="#changeAdmin-exampleModal">Chuyển
+                                        admin</button>
                                 </div>
                             </div>
                             <!-- <div class="accordion-item card border">
@@ -1929,70 +2053,7 @@
             </div>
             <!-- End User chat -->
 
-            <div class="modal fade" id="changeAdmin-exampleModal" tabindex="-1" role="dialog"
-                                aria-labelledby="addgroup-exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title font-size-16" id="addgroup-exampleModalLabel">Chuyển Admin</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close">
-                                            </button>
-                                        </div>
-                                        <div class="modal-body p-4">
-                                            <form>
-                                                <div class="mb-4">
-                                                    <label class="form-label">Group Members</label>
-                                                    <div class="mb-3">
-                                                        <button class="btn btn-light btn-sm" type="button"
-                                                            data-bs-toggle="collapse"
-                                                            data-bs-target="#groupmembercollapse" aria-expanded="false"
-                                                            aria-controls="groupmembercollapse">
-                                                            Select Members
-                                                        </button>
-                                                    </div>
 
-                                                    <div class="collapse" id="groupmembercollapse">
-                                                        <div class="card border">
-                                                            <div class="card-header">
-                                                                <h5 class="font-size-15 mb-0">Contacts</h5>
-                                                            </div>
-                                                            <div class="card-body p-2">
-                                                                <div data-simplebar style="max-height: 150px;">
-                                                                    <div>
-                                                                        <ul id="membersInGroupModalChangeAdmin"
-                                                                            class="list-unstyled contact-list">
-                                                                            <!-- <li>
-                                                                                <div class="form-check">
-                                                                                    <input type="radio" name="selectAdmin" value="1" class="form-check-input" id="memberCheck1">
-                                                                                    <label class="form-check-label" for="memberCheck1">Albert Rodarte</label>
-                                                                                </div>
-                                                                            </li>
-                                                                            <li>
-                                                                                <div class="form-check">
-                                                                                    <input type="radio" name="selectAdmin" value="2" class="form-check-input" id="memberCheck2">
-                                                                                    <label class="form-check-label" for="memberCheck1">Albert</label>
-                                                                                </div>
-                                                                            </li> -->
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-link"
-                                                data-bs-dismiss="modal">Close</button>
-                                            <button onclick="handleChangeAdmin()" id="btnCreateGroup" type="button"
-                                                class="btn btn-primary">Chuyển quyền admin</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
             <!-- audiocall Modal -->
             <div class="modal fade" id="audiocallModal" tabindex="-1" aria-hidden="true">
