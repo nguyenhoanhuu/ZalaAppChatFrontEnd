@@ -17,36 +17,57 @@ const handleFindUserByPhoneNumber = () => {
         success: function (result) {
             friendFinded = result;
 
-            let html = `
-                <div id="group_card" class="card group_card_mb">
-                    <div class="card-body">
-                    <div class="d-flex">
-                        <div class="avatar avatar-online mr-5">
-                            <div class="chat-user-img align-self-center me-3 ms-0">
-                                <div class="avatar-xs">
-                                    <span class="avatar-title rounded-circle bg-soft-primary text-primary">
-                                        U
-                                    </span>
+            if (friendFinded) {
+                let html = `
+                    <div id="group_card" class="card group_card_mb">
+                        <div class="card-body">
+                        <div class="d-flex">
+                            <div class="avatar avatar-online mr-5">
+                                <div class="chat-user-img align-self-center me-3 ms-0">
+                                    <div class="avatar-xs">
+                                        <span class="avatar-title rounded-circle bg-soft-primary text-primary">
+                                            U
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-1 overflow-hidden">
+                                <h6 class="mb-0">${friendFinded.fullName}</h6>
+    
+                            </div>
+                            <div class="align-self-auto ml-auto">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="hidden" value=" data.id + '" id="RecipientId">
+                                    <label class="custom-control-label" for="inputContactId"></label>
                                 </div>
                             </div>
                         </div>
-                        <div class="flex-1 overflow-hidden">
-                            <h6 class="mb-0">${friendFinded.fullName}</h6>
-
                         </div>
-                        <div class="align-self-auto ml-auto">
-                            <div class="custom-control custom-checkbox">
-                                <input type="hidden" value=" data.id + '" id="RecipientId">
-                                <label class="custom-control-label" for="inputContactId"></label>
-                            </div>
-                        </div>
+                        <label class="stretched-label" for="id-user-1"></label>
                     </div>
-                    </div>
-                    <label class="stretched-label" for="id-user-1"></label>
-                </div>
-            `;
+                `;
 
-            document.getElementById("findUserByPhoneNumber").innerHTML = html;
+                if (
+                    contacts.find((item) => item.friendId === friendFinded.id)
+                ) {
+                    html =
+                        html +
+                        `
+                     <h6>Người dùng này đã là bạn bè</h6>
+                    `;
+                }
+
+                document.getElementById("findUserByPhoneNumber").innerHTML =
+                    html;
+                // $("#btnSendRequestAddFriend").removeAttr("disabled");
+                // $("#btnSendRequestAddFriend").prop("disabled", false);
+            } else {
+                $("#findUserByPhoneNumber").html(() => {
+                    return "<h6>Không tìm thấy người dùng này</h6>";
+                    // $("#btnSendRequestAddFriend").prop("disabled", true);
+                });
+                // alert("Không tìm thấy người dùng này");
+            }
         },
         error: function (textStatus, errorThrown) {
             console.log("Error: " + textStatus + errorThrown);
