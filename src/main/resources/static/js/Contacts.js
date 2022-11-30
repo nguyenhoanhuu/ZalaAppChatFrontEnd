@@ -208,7 +208,7 @@ const handleCreateGroup = () => {
             //add conversation
 
             alert("Tạo nhóm thành công");
-
+            // window.location.reload();
             $.ajax({
                 url: `${api}/conversations/${result.id}`,
                 type: "GET",

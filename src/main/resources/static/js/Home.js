@@ -344,6 +344,9 @@ const handleSelectConversation = async (conversationId) => {
     $("#chatConversation").html(() => {
         return "";
     });
+    $("#memberaddInGroup").html(() => {
+        return "";
+    });
     $("#conversationName").html(() => {
         return "";
     });
@@ -1251,11 +1254,12 @@ function scrollToBottomMessages() {
     container.scrollTo({ top: 100000, behavior: "smooth" });
 }
 
+//handle add member in group
 $(function () {
     $("#btnAddFriendInGroupChat").on("click", function () {
         // console.log(conversationSelected.id);
-        let idUser = $("input:checkbox[name=contacts]:checked").val();
-
+        let idUser = $('input[name="friend"]:checked').val();
+        
         const data = {
             userId: idUser,
             conversationId: conversationSelected.id,
@@ -1305,10 +1309,88 @@ $(function () {
     });
 });
 function getLeaveConversation() {
-    const getUser = localStorage.getItem("userId");
     var name;
-    // console.log(getUser)
-    //console.log(conversationSelected.id)
+    let checkAdmin;
+    const getUser = localStorage.getItem("userId");
+    const admin = conversationSelected.admin;
+    checkAdmin = getUser === admin ? true : false;
+
+    if (checkAdmin) {
+        $("#changeAdmin-exampleModal").modal("toggle");
+    }
+    else{
+        $.ajax({
+            url: `${api}/members/${conversationSelected.id}`,
+            type: "GET",
+            async: true,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+                xhr.setRequestHeader("Accept", "application/json");
+                xhr.setRequestHeader("Content-Type", "application/json");
+            },
+            success: function (result) {
+                user = result;
+                console.log(user);
+                user.map((userId) => {
+                    if (userId.userId == getUser) {
+                        name = userId.id;
+                    }
+                });
+                let body = {
+                    userId: getUser,
+                    conversationId: conversationSelected.id,
+                    memberId: name,
+                };
+                let leaveConversationInUser = {
+                    userId: getUser,
+                    conversationId: conversationSelected.id,
+                };
+                console.log(body);
+    
+                $.ajax({
+                    url: `${api}/conversations/leaveConversation`,
+                    type: "POST",
+                    data: JSON.stringify(body),
+                    async: true,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+                        xhr.setRequestHeader("Accept", "application/json");
+                        xhr.setRequestHeader("Content-Type", "application/json");
+                    },
+                    success: function (result) {
+                        console.log(result);
+    
+                        $.ajax({
+                            url: `${api}/conversations/leaveConversationInUser`,
+                            type: "POST",
+                            data: JSON.stringify(leaveConversationInUser),
+                            async: true,
+                            beforeSend: function (xhr) {
+                                xhr.setRequestHeader(
+                                    "Access-Control-Allow-Origin",
+                                    "*"
+                                );
+                                xhr.setRequestHeader("Accept", "application/json");
+                                xhr.setRequestHeader(
+                                    "Content-Type",
+                                    "application/json"
+                                );
+                            },
+                            success: function (result1) {
+                                console.log(result1);
+                                alert("Rời nhóm thành công");
+                                window.location.reload();
+                            },
+                        });
+                    },
+                });
+            },
+        });
+    };
+}
+function handleFindMemberUsingAddInGroup() {
+
+    //Tìm conversationId trong danh sách member. 
     $.ajax({
         url: `${api}/members/${conversationSelected.id}`,
         type: "GET",
@@ -1319,97 +1401,68 @@ function getLeaveConversation() {
             xhr.setRequestHeader("Content-Type", "application/json");
         },
         success: function (result) {
-            user = result;
-            console.log(user);
-            user.map((userhe) => {
-                if (userhe.userId == getUser) {
-                    name = userhe.id;
-                }
-            });
-            let body = {
-                userId: getUser,
-                conversationId: conversationSelected.id,
-                memberId: name,
-            };
-            let leaveConversationInUser = {
-                userId: getUser,
-                conversationId: conversationSelected.id,
-            };
-            console.log(body);
+           console.log(result);
+           var listUserIdInMember =[];
+           result.map((member)=>{
+                listUserIdInMember.push(member.userId);    
+           });
+           console.log(listUserIdInMember);
 
-            $.ajax({
-                url: `${api}/conversations/leaveConversation`,
-                type: "POST",
-                data: JSON.stringify(body),
-                async: true,
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-                    xhr.setRequestHeader("Accept", "application/json");
-                    xhr.setRequestHeader("Content-Type", "application/json");
-                },
-                success: function (result) {
-                    console.log(result);
-
+           //lấy danh sách bạn bè 
+           $.ajax({
+            url: `${api}/contacts/user/${localStorage.getItem("userId")}`,
+            type: "GET",
+            async: true,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+                xhr.setRequestHeader("Accept", "application/json");
+                xhr.setRequestHeader("Content-Type", "application/json");
+            },
+            success: function (result) {
+                //lưu danh sách bạn bè theo Id
+              var friends=[];
+                result.map((myFriend)=>{
+                    friends.push(myFriend.friendId);
+                });
+                // kiểm tra nếu trong danh sách bạn bè không ở trong conversation thì lấy ra Id
+                var listMember = $.grep(friends, function(el){return $.inArray(el,listUserIdInMember) == -1}); 
+                console.log(listMember);
+                var user=[];
+                listMember.map((userId)=>{
+                    console.log(userId)
                     $.ajax({
-                        url: `${api}/conversations/leaveConversationInUser`,
-                        type: "POST",
-                        data: JSON.stringify(leaveConversationInUser),
+                        url: `${api}/users/${userId}`,
+                        type: "GET",
                         async: true,
                         beforeSend: function (xhr) {
-                            xhr.setRequestHeader(
-                                "Access-Control-Allow-Origin",
-                                "*"
-                            );
+                            xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
                             xhr.setRequestHeader("Accept", "application/json");
-                            xhr.setRequestHeader(
-                                "Content-Type",
-                                "application/json"
-                            );
+                            xhr.setRequestHeader("Content-Type", "application/json");
                         },
-                        success: function (result1) {
-                            console.log(result1);
-                            alert("Rời nhóm thành công");
-                            window.location.reload();
-                        },
+                        success: function (result) {
+                            var htmlFriends = "";
+                                let friend = result;
+                                htmlFriends = `
+                                <li>
+                                         <div class="form-check">
+                                             <input type="radio" name="friend" value="${friend.id}" class="form-check-input" id="contact_${user.friendId}">
+                                             <label class="form-check-label" for="memberCheck1">${friend.fullName}</label>
+                                         </div>
+                                 </li>
+        
+                           `;
+                           $("#memberaddInGroup").append(htmlFriends);
+                            
+                        }
                     });
-                },
-            });
-        },
+                 
+                  
+                });
+            }});
+        }
     });
-}
-function handleFindMemberByName() {
-    let htmlContacts = "";
-    let name = document.getElementById("searchNameFriend").value;
-    $.ajax({
-        url: `${api}/contacts/user/${localStorage.getItem("userId")}`,
-        type: "GET",
-        async: true,
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-            xhr.setRequestHeader("Accept", "application/json");
-            xhr.setRequestHeader("Content-Type", "application/json");
-        },
-        success: function (result) {
-            users = result;
-            console.log(users);
-            users.map((user) => {
-                if (user.nameFriend == name) {
-                    htmlContacts = `
-                              <li>
-                                  <div class="form-check">
-                                      <input type="checkbox" name="contacts" value="${user.friendId}" class="form-check-input" id="contact_${user.friendId}" checked>
-                                      <label class="form-check-label" for="memberCheck1">${user.nameFriend}</label>
-                                  </div>
-                              </li>
-                              
-                              `;
-                }
-            });
 
-            $("#contactsCreateGroup123").append(htmlContacts);
-        },
-    });
-}
+};
 
 function handleHideShowButtonAddFriend() {
     console.log(conversationSelected.id);
@@ -1499,7 +1552,7 @@ function handleChangeAdmin() {
             xhr.setRequestHeader("Content-Type", "application/json");
         },
         success: function (result1) {
-            console.log(result1);
+            // console.log(result1);
             alert("Đã chuyển quyền admin");
             window.location.reload();
         },
