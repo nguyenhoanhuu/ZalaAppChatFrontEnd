@@ -63,29 +63,29 @@
             <!-- Start side-menu nav -->
             <div class="flex-lg-column my-auto">
                 <ul class="nav nav-pills side-menu-nav justify-content-center" role="tablist">
-                    <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Profile">
+                    <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Thông tin">
                         <a class="nav-link" id="pills-user-tab" data-bs-toggle="pill" href="#pills-user" role="tab">
                             <i class="fas fa-solid fa-user"></i>
                         </a>
                     </li>
-                    <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Chats">
+                    <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Tin nhắn">
                         <a class="nav-link active" id="pills-chat-tab" data-bs-toggle="pill" href="#pills-chat"
                             role="tab">
                             <i class="fas fa-comments"></i>
                         </a>
                     </li>
-                    <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Groups">
+                    <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Nhóm">
                         <a class="nav-link" id="pills-groups-tab" data-bs-toggle="pill" href="#pills-groups" role="tab">
                             <i class="ri-group-line"></i>
                         </a>
                     </li>
-                    <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Contacts">
+                    <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Bạn bè">
                         <a class="nav-link" id="pills-contacts-tab" data-bs-toggle="pill" href="#pills-contacts"
                             role="tab">
                             <i class="fas fa-solid fa-address-book"></i>
                         </a>
                     </li>
-                    <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Notify">
+                    <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Thông báo">
                         <a class="nav-link" id="pills-setting-tab" data-bs-toggle="pill" href="#pills-setting"
                             role="tab">
                             <i class="fas fa-sharp fa-solid fa-bell"></i>
@@ -98,13 +98,13 @@
                                 class="profile-user rounded-circle userAvatar">
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Profile <i
+                            <a class="dropdown-item" href="#">Thông tin <i
                                     class="ri-profile-line float-end text-muted"></i></a>
-                            <a class="dropdown-item" href="#">Setting <i
+                            <a class="dropdown-item" href="#">Cài đặt <i
                                     class="ri-settings-3-line float-end text-muted"></i></a>
                             <div class="dropdown-divider"></div>
                             <!-- NHH: handle tag a onclick Logout -->
-                            <a class="dropdown-item" onclick="return getLogout();">Log out <i
+                            <a class="dropdown-item" onclick="return getLogout();">Đăng xuất <i
                                     class="ri-logout-circle-r-line float-end text-muted"></i></a>
                         </div>
                     </li>
@@ -129,15 +129,15 @@
                                 class="profile-user rounded-circle userAvatar">
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Profile <i
+                            <a class="dropdown-item" href="#">Thông tin <i
                                     class="ri-profile-line float-end text-muted"></i></a>
                             <button type="button" class="dropdown-item" data-bs-toggle="modal"
                                 data-bs-target="#change-password-modal">
-                                Change Password <i class="ri-settings-3-line float-end text-muted"></i>
+                                Đổi mật khẩu <i class="ri-settings-3-line float-end text-muted"></i>
                             </button>
                             <div class="dropdown-divider"></div>
                             <!-- NHH: handle tag a onclick Logout -->
-                            <a class="dropdown-item" href="#" onclick="return getLogout();">Log out <i
+                            <a class="dropdown-item" href="#" onclick="return getLogout();">Đăng xuất <i
                                     class="ri-logout-circle-r-line float-end text-muted"></i></a>
                         </div>
                     </li>
@@ -158,7 +158,7 @@
                     <div class="modal-body p-4">
                         <form>
                             <div class="mb-4">
-                                <label for="addgroupname-input" class="form-label">nhập lại mật khẩu cũ</label>
+                                <label for="addgroupname-input" class="form-label">Nhập lại mật khẩu cũ</label>
                                 <input type="text" class="form-control" id="oldpassword_changePassword_modal"
                                     placeholder="nhập lại mật khẩu cũ" />
                                 <span id="errorPassword" class="form-label" style="
@@ -262,9 +262,8 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-link" data-bs-dismiss="modal">Close</button>
-                        <button id="btnAddFriendInGroupChat" type="button" class="btn btn-primary">Add
-                            Groups</button>
+                        <button type="button" class="btn btn-link" data-bs-dismiss="modal">Đóng</button>
+                        <button id="btnAddFriendInGroupChat" type="button" class="btn btn-primary">Thêm vào nhóm</button>
                     </div>
                     <!-- onclick="handleCreateGroup()" -->
                 </div>
@@ -282,12 +281,12 @@
                     <div class="modal-body p-4">
                         <form>
                             <div class="mb-4">
-                                <label class="form-label">Group Members</label>
+                                <label class="form-label">Danh sách thành viên</label>
                                 <div class="mb-3">
                                     <button class="btn btn-light btn-sm" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#groupmembercollapse" aria-expanded="false"
                                         aria-controls="groupmembercollapse">
-                                        Select Members
+                                        Chọn thành viên
                                     </button>
                                 </div>
 
@@ -324,7 +323,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-link" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-link" data-bs-dismiss="modal">Đóng</button>
                         <button onclick="handleChangeAdmin()" id="btnCreateGroup" type="button"
                             class="btn btn-primary">Chuyển quyền admin</button>
                     </div>
@@ -354,7 +353,7 @@
                                                 data-bs-placement="top" title="Profile">
                                                 <a class="nav-link" id="pills-user-tab" data-bs-toggle="pill"
                                                     href="#pills-updateUser" role="tab">
-                                                    edit
+                                                    Sửa
                                                     <!-- <i class="ri-user-2-line"></i> -->
                                                 </a>
                                             </li>
@@ -375,7 +374,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <h4 class="mb-0">My Profile</h4>
+                            <h4 class="mb-0">Thông tin</h4>
                         </div>
 
                         <div class="text-center p-4 border-bottom">
@@ -405,7 +404,7 @@
                                             <h5 class="font-size-14 m-0">
                                                 <i
                                                     class="fas fa-solid fa-circle-info me-2 ms-0 ms-0 align-middle d-inline-block"></i>
-                                                About
+                                                Chi tiết
                                             </h5>
                                         </button>
                                     </div>
@@ -440,14 +439,14 @@
                     <!-- Start chats content -->
                     <div>
                         <div class="px-4 pt-4">
-                            <h4 class="mb-4">Chats</h4>
+                            <h4 class="mb-4">Nhắn tin</h4>
                             <div class="search-box chat-search-box">
                                 <div class="input-group mb-3 rounded-3">
                                     <span class="input-group-text text-muted bg-light pe-1 ps-3" id="basic-addon1">
                                         <i class="ri-search-line search-icon font-size-18"></i>
                                     </span>
                                     <input type="text" class="form-control bg-light"
-                                        placeholder="Search messages or users" aria-label="Search messages or users"
+                                        placeholder="Tìm kiếm..." aria-label="Search messages or users"
                                         aria-describedby="basic-addon1">
                                 </div>
                             </div>
@@ -525,7 +524,7 @@
 
                         <!-- Start chat-message-list -->
                         <div class="px-2">
-                            <h5 class="mb-3 px-3 font-size-16">Recent</h5>
+                            <h5 class="mb-3 px-3 font-size-16">Hội thoại</h5>
 
                             <div class="chat-message-list" data-simplebar>
 
@@ -626,7 +625,7 @@
                                 </div>
 
                             </div>
-                            <h4 class="mb-4">Groups</h4>
+                            <h4 class="mb-4">Danh sách nhóm</h4>
 
                             <!-- Start add group Modal -->
                             <div class="modal fade" id="addgroup-exampleModal" tabindex="-1" role="dialog"
@@ -634,8 +633,7 @@
                                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title font-size-16" id="addgroup-exampleModalLabel">Create
-                                                New Group</h5>
+                                            <h5 class="modal-title font-size-16" id="addgroup-exampleModalLabel">Tạo nhóm mới</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close">
                                             </button>
@@ -643,26 +641,25 @@
                                         <div class="modal-body p-4">
                                             <form>
                                                 <div class="mb-4">
-                                                    <label for="addgroupname-input" class="form-label">Group
-                                                        Name</label>
+                                                    <label for="addgroupname-input" class="form-label">Tên nhóm</label>
                                                     <input type="text" class="form-control" id="addGroupnameInput"
                                                         placeholder="Enter Group Name">
                                                 </div>
                                                 <div class="mb-4">
-                                                    <label class="form-label">Group Members</label>
+                                                    <label class="form-label">Danh sách thành viên</label>
                                                     <div class="mb-3">
                                                         <button class="btn btn-light btn-sm" type="button"
                                                             data-bs-toggle="collapse"
                                                             data-bs-target="#groupmembercollapse" aria-expanded="false"
                                                             aria-controls="groupmembercollapse">
-                                                            Select Members
+                                                            Chọn thành viên
                                                         </button>
                                                     </div>
 
                                                     <div class="collapse" id="groupmembercollapse">
                                                         <div class="card border">
                                                             <div class="card-header">
-                                                                <h5 class="font-size-15 mb-0">Contacts</h5>
+                                                                <h5 class="font-size-15 mb-0">Liên hệ</h5>
                                                             </div>
                                                             <div class="card-body p-2">
                                                                 <div data-simplebar style="max-height: 150px;">
@@ -687,9 +684,9 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-link"
-                                                data-bs-dismiss="modal">Close</button>
+                                                data-bs-dismiss="modal">Đóng</button>
                                             <button onclick="handleCreateGroup()" id="btnCreateGroup" type="button"
-                                                class="btn btn-primary">Create Groups</button>
+                                                class="btn btn-primary">Tạo nhóm</button>
                                         </div>
                                     </div>
                                 </div>
@@ -701,8 +698,8 @@
                                     <span class="input-group-text text-muted bg-light pe-1 ps-3" id="basic-addon1">
                                         <i class="ri-search-line search-icon font-size-18"></i>
                                     </span>
-                                    <input type="text" class="form-control bg-light" placeholder="Search groups..."
-                                        aria-label="Search groups..." aria-describedby="basic-addon1">
+                                    <input type="text" class="form-control bg-light" placeholder="Tìm kiếm..."
+                                        aria-label="Tìm kiếm..." aria-describedby="basic-addon1">
                                 </div>
                             </div>
                             <!-- Search Box-->
@@ -839,7 +836,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <h4 class="mb-4">Contacts</h4>
+                            <h4 class="mb-4">Danh sách bạn bè</h4>
 
                             <!-- Start Add contact Modal -->
                             <div class="modal fade" id="addContact-exampleModal" tabindex="-1" role="dialog"
@@ -889,7 +886,7 @@
                                             <i class="ri-search-line search-icon font-size-18"></i>
                                         </button>
                                     </div>
-                                    <input type="text" class="form-control bg-light" placeholder="Search users..">
+                                    <input type="text" class="form-control bg-light" placeholder="Tìm kiếm...">
                                 </div>
                             </div>
                             <!-- End search-box -->
@@ -947,7 +944,7 @@
                             </div>
 
                             <h5 id="userName" class="font-size-16 mb-1 text-truncate"></h5>
-                            <div class="dropdown d-inline-block mb-1">
+                            <!-- <div class="dropdown d-inline-block mb-1">
                                 <a class="text-muted dropdown-toggle pb-1 d-block" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Available <i class="mdi mdi-chevron-down"></i>
@@ -957,7 +954,7 @@
                                     <a class="dropdown-item" href="#">Available</a>
                                     <a class="dropdown-item" href="#">Busy</a>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <!-- End profile user -->
 
@@ -1174,7 +1171,7 @@
                     <div>
                         <div class="px-4 pt-4">
                             <div class="user-chat-nav ">
-                                <h4 class="mb-0">My Profile</h4>
+                                <h4 class="mb-0">Thông tin</h4>
                             </div>
 
                             <div class="text-center p-4 border-bottom">
@@ -1208,7 +1205,7 @@
                                                 <h5 class="font-size-14 m-0">
                                                     <i
                                                         class="fas fa-solid fa-circle-info me-2 ms-0 ms-0 align-middle d-inline-block"></i>
-                                                    About
+                                                    Chi tiết
                                                 </h5>
                                             </button>
                                         </div>
@@ -1228,7 +1225,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <button id="btn_updateUser">Update</button>
+                                        <button id="btn_updateUser">Cập nhật</button>
                                     </div>
                                     <!-- End About card -->
                                 </div>
@@ -1721,7 +1718,7 @@
                             <div class="col">
                                 <input id="message-to-send" type="text"
                                     class="form-control form-control-lg bg-light border-light"
-                                    placeholder="Enter Message...">
+                                    placeholder="Nhập tin nhắn...">
                             </div>
                             <div class="col-auto">
                                 <div class="chat-input-links ms-md-2 me-md-0">
