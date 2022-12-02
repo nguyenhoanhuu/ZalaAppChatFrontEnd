@@ -96,15 +96,6 @@ $('#oldpassword_changePassword_modal').blur(() => {
                     return false;
                 },
             });
-
-            // if (result.password == oldPassword) {
-            //   bool = true;
-            // }
-            // if (bool) {
-            //   $("#errorPassword").css("display", "none");
-            // } else {
-            //   $("#errorPassword").css("display", "block");
-            // }
         },
         error: function (textStatus, errorThrown) {
             console.log('Error: ' + textStatus + errorThrown);
@@ -115,12 +106,6 @@ $('#oldpassword_changePassword_modal').blur(() => {
 $('#btnChangePassword').click(() => {
     let newPasssword = $('#password').val();
 
-    // const formUpdateAccount = {
-    //   id: account.id,
-    //   phoneNumber: account.phoneNumber,
-    //   password: newPasssword,
-    //   userId: account.userId,
-    // };
     mainAccount.password = newPasssword;
 
     $.ajax({

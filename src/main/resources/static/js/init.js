@@ -42,7 +42,7 @@ $(document).ready(function () {
 
             default:
                 handleSendMessageListImage(filesArr);
-                const timeSendMessage = filesArr.length * 2000;
+                const timeSendMessage = filesArr.length * 4000;
                 filesArr = [];
                 ClearElementChild('listImageSelectTemporary');
                 console.log(urlListImage);

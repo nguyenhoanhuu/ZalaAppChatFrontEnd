@@ -774,7 +774,7 @@ class="ri-file-copy-line float-end text-muted"></i></a>
                     `;
                 $(`#conversation_messageNotify_${message.conversationId}`).append(htmlMessageNotify);
             });
-        }, 200);
+        }, 1000);
     });
 };
 
@@ -1167,14 +1167,14 @@ function disbandingtheGroup() {
 }
 // xử lý chuyển quyền admin
 function handleChangeAdmin() {
-    const value = $('input[name="selectAdmin"]:checked').val();
+    const userId = $('input[name="selectAdmin"]:checked').val();
     const bodyUpdateAdmin = {
         id: conversationSelected.id,
         groupName: conversationSelected.groupName,
         memberInGroup: conversationSelected.memberInGroup,
         messages: conversationSelected.messages,
         typeChat: conversationSelected.typeChat,
-        admin: value,
+        admin: userId,
     };
 
     $.ajax({
