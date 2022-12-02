@@ -1,5 +1,5 @@
-const api = 'http://localhost:8080';
-const client = 'http://localhost:8000';
+const api = 'https://zalachatapp.herokuapp.com';
+const client = 'https://zalachat.herokuapp.com';
 
 $(document).ready(function () {
     let form = document.getElementById('formLogin');

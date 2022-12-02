@@ -1,5 +1,6 @@
 function getLogout() {
-    const client = 'http://localhost:8000';
+    const client = 'https://zalachat.herokuapp.com';
     window.localStorage.removeItem('userId');
     window.location.href = `${client}/login`;
 }
+
