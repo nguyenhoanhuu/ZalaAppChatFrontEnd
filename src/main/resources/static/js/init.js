@@ -9,14 +9,14 @@ import {
 let userAvatarTemporary = '';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyB0FKXbSt_rK7wRNtlz0opywxtoGYFmtLg",
-    authDomain: "zala-d8638.firebaseapp.com",
-    projectId: "zala-d8638",
-    storageBucket: "zala-d8638.appspot.com",
-    messagingSenderId: "535358142860",
-    appId: "1:535358142860:web:546bc106e7a66b68b3fea9",
-    measurementId: "G-V6JFR21WZC"
-  };
+    apiKey: 'AIzaSyB0FKXbSt_rK7wRNtlz0opywxtoGYFmtLg',
+    authDomain: 'zala-d8638.firebaseapp.com',
+    projectId: 'zala-d8638',
+    storageBucket: 'zala-d8638.appspot.com',
+    messagingSenderId: '535358142860',
+    appId: '1:535358142860:web:546bc106e7a66b68b3fea9',
+    measurementId: 'G-V6JFR21WZC',
+};
 import emoji from '../assets/images/emoji2.json' assert { type: 'json' };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -41,40 +41,9 @@ $(document).ready(function () {
                 break;
 
             default:
-                var promise1 = new Promise((resolve) => {
-                    resolve();
-                  });
-                  var promise2 = new Promise((resolve) => {
-                    resolve();
-                  });
-          
-                  promise2.then(() => {
-                    handleSendMessageListImage(filesArr);
-                  });
-                  promise1
-                    .then(() => {
-                      return promise2;
-                    })
-                    .then(() => {
-                      filesArr = [];
-                      ClearElementChild("listImageSelectTemporary");
-                      sendMessage(
-                        myMemberInConversationSelected,
-                        "listImage",
-                        urlListImage,
-                        conversationSelected
-                      );
+                handleSendMessageListImage(filesArr);
 
-          
-                      urlListImage = "";
-                    })
-                    .catch(() => {
-                      console.log("có lỗi");
-                    })
-                    .finally(() => {
-                      "upload thành công ";
-                    });
-                  break;
+                break;
         }
     });
 
@@ -219,6 +188,10 @@ function handleSendMessageListImage(listImage) {
             //   console.log(urlListImage);
             // });
         }
+        filesArr = [];
+        await ClearElementChild('listImageSelectTemporary');
+        await sendMessage(myMemberInConversationSelected, 'listImage', urlListImage, conversationSelected);
+        urlListImage = '';
     })();
 }
 function renderListEmoji(listEmoji) {
