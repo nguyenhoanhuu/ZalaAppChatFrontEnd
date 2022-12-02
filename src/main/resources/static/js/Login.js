@@ -1,6 +1,7 @@
 const api = 'https://zalachatapp.herokuapp.com';
 const client = 'https://zalachat.herokuapp.com';
 
+
 $(document).ready(function () {
     let form = document.getElementById('formLogin');
     form.addEventListener('submit', (event) => {
@@ -29,7 +30,7 @@ $(document).ready(function () {
                     localStorage.setItem('userId', result.userId);
                     window.location.href = `${client}/home`;
                 } else {
-                    alert('tai khaon mat khau khong dungh');
+                    alert('Tài khoản mật khẩu không đúng');
                 }
             },
             error: function (textStatus, errorThrown) {
