@@ -774,7 +774,7 @@ class="ri-file-copy-line float-end text-muted"></i></a>
                     `;
                 $(`#conversation_messageNotify_${message.conversationId}`).append(htmlMessageNotify);
             });
-        }, 1000);
+        }, 3500);
     });
 };
 
