@@ -41,18 +41,40 @@ $(document).ready(function () {
                 break;
 
             default:
-                handleSendMessageListImage(filesArr);
-                const timeSendMessage = filesArr.length * 6000;
-                filesArr = [];
-                ClearElementChild('listImageSelectTemporary');
-                console.log(urlListImage);
-                setTimeout(() => {
-                    sendMessage(myMemberInConversationSelected, 'listImage', urlListImage, conversationSelected);
-                }, timeSendMessage);
+                var promise1 = new Promise((resolve) => {
+                    resolve();
+                  });
+                  var promise2 = new Promise((resolve) => {
+                    resolve();
+                  });
+          
+                  promise2.then(() => {
+                    handleSendMessageListImage(filesArr);
+                  });
+                  promise1
+                    .then(() => {
+                      return promise2;
+                    })
+                    .then(() => {
+                      filesArr = [];
+                      ClearElementChild("listImageSelectTemporary");
+                      sendMessage(
+                        myMemberInConversationSelected,
+                        "listImage",
+                        urlListImage,
+                        conversationSelected
+                      );
 
-                urlListImage = '';
-
-                break;
+          
+                      urlListImage = "";
+                    })
+                    .catch(() => {
+                      console.log("có lỗi");
+                    })
+                    .finally(() => {
+                      "upload thành công ";
+                    });
+                  break;
         }
     });
 
