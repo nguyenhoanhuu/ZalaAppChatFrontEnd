@@ -3,16 +3,16 @@ $(document).ready(function () {});
 let friendFinded;
 
 const handleFindUserByPhoneNumber = () => {
-    const phoneNumber = $("#inputFindUserByPhoneNumber").val();
+    const phoneNumber = $('#inputFindUserByPhoneNumber').val();
 
     $.ajax({
         url: `${api}/users/filter?phoneNumber=${phoneNumber}`,
-        type: "GET",
+        type: 'GET',
         async: true,
         beforeSend: function (xhr) {
-            xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-            xhr.setRequestHeader("Accept", "application/json");
-            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+            xhr.setRequestHeader('Accept', 'application/json');
+            xhr.setRequestHeader('Content-Type', 'application/json');
         },
         success: function (result) {
             friendFinded = result;
@@ -47,9 +47,7 @@ const handleFindUserByPhoneNumber = () => {
                     </div>
                 `;
 
-                if (
-                    contacts.find((item) => item.friendId === friendFinded.id)
-                ) {
+                if (contacts.find((item) => item.friendId === friendFinded.id)) {
                     html =
                         html +
                         `
@@ -57,20 +55,19 @@ const handleFindUserByPhoneNumber = () => {
                     `;
                 }
 
-                document.getElementById("findUserByPhoneNumber").innerHTML =
-                    html;
+                document.getElementById('findUserByPhoneNumber').innerHTML = html;
                 // $("#btnSendRequestAddFriend").removeAttr("disabled");
                 // $("#btnSendRequestAddFriend").prop("disabled", false);
             } else {
-                $("#findUserByPhoneNumber").html(() => {
-                    return "<h6>Không tìm thấy người dùng này</h6>";
+                $('#findUserByPhoneNumber').html(() => {
+                    return '<h6>Không tìm thấy người dùng này</h6>';
                     // $("#btnSendRequestAddFriend").prop("disabled", true);
                 });
                 // alert("Không tìm thấy người dùng này");
             }
         },
         error: function (textStatus, errorThrown) {
-            console.log("Error: " + textStatus + errorThrown);
+            console.log('Error: ' + textStatus + errorThrown);
         },
     });
 };
@@ -88,13 +85,13 @@ const handleAcceptAddFriend = (friendId, nameFriend, requestId) => {
 
     $.ajax({
         url: `${api}/contacts`,
-        type: "POST",
+        type: 'POST',
         data: JSON.stringify(bodyRequestAddFriend),
         async: true,
         beforeSend: function (xhr) {
-            xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-            xhr.setRequestHeader("Accept", "application/json");
-            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+            xhr.setRequestHeader('Accept', 'application/json');
+            xhr.setRequestHeader('Content-Type', 'application/json');
         },
         success: function (result) {
             $(`#addFriendRequest_${requestId}`).remove();
@@ -103,20 +100,20 @@ const handleAcceptAddFriend = (friendId, nameFriend, requestId) => {
 
             $.ajax({
                 url: `${api}/conversations/${result.conversationId}`,
-                type: "GET",
+                type: 'GET',
                 async: true,
                 beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-                    xhr.setRequestHeader("Accept", "application/json");
-                    xhr.setRequestHeader("Content-Type", "application/json");
+                    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+                    xhr.setRequestHeader('Accept', 'application/json');
+                    xhr.setRequestHeader('Content-Type', 'application/json');
                 },
                 success: function (result) {
                     connectToChat(result);
 
                     let converSationNameSolo;
 
-                    if (result.groupName.includes("-")) {
-                        let temp = result.groupName.split("-");
+                    if (result.groupName.includes('-')) {
+                        let temp = result.groupName.split('-');
                         temp.forEach((name) => {
                             if (name !== user.fullName) {
                                 converSationNameSolo = name;
@@ -125,17 +122,13 @@ const handleAcceptAddFriend = (friendId, nameFriend, requestId) => {
                     }
 
                     const htmlConversation = `
-                            <li onClick="handleSelectConversation('${
-                                result.id
-                            }')">
+                            <li onClick="handleSelectConversation('${result.id}')">
                                 <a href="#">
-                                    <div id="conversationID_${
-                                        result.id
-                                    }" class="d-flex">
+                                    <div id="conversationID_${result.id}" class="d-flex">
                                         <div class="chat-user-img align-self-center me-3 ms-0">
                                             <div class="avatar-xs">
                                                 <span class="avatar-title rounded-circle bg-soft-primary text-primary">
-                                                        ${"U"}
+                                                        ${'U'}
                                                     </span>
                                             </div>
                                         </div>
@@ -143,20 +136,18 @@ const handleAcceptAddFriend = (friendId, nameFriend, requestId) => {
                                             result.id
                                         }" class="flex-1 overflow-hidden">
                                             <h5 class="text-truncate font-size-15 mb-1">${
-                                                !converSationNameSolo
-                                                    ? result.groupName
-                                                    : converSationNameSolo
+                                                !converSationNameSolo ? result.groupName : converSationNameSolo
                                             }</h5>
                                         </div>
                                     </div>
                                 </a>
                             </li>`;
-                    $("#listConversation").append(htmlConversation);
+                    $('#listConversation').append(htmlConversation);
                     conversations.push(result);
                     console.log(conversations);
                 },
                 error: function (textStatus, errorThrown) {
-                    console.log("Error: " + textStatus + errorThrown);
+                    console.log('Error: ' + textStatus + errorThrown);
                 },
             });
         },
@@ -167,23 +158,23 @@ const handleDeleteAddFriend = (notifycationId) => {
     // http://localhost:8080/notifycation/deleteFriendRequest/MfLLwnbKYVzziTG8Fxy3
     $.ajax({
         url: `${api}/notifycation/deleteFriendRequest/${notifycationId}`,
-        type: "DELETE",
+        type: 'DELETE',
         async: true,
         beforeSend: function (xhr) {
-            xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-            xhr.setRequestHeader("Accept", "application/json");
-            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+            xhr.setRequestHeader('Accept', 'application/json');
+            xhr.setRequestHeader('Content-Type', 'application/json');
         },
         success: function (result) {
-            $("#123").remove();
-            alert("thanhcong");
+            $('#123').remove();
+            alert('thanhcong');
             // window.location.reload();
         },
     });
 };
 const handleRequestAddFriend = () => {
-    const phoneNumber = $("#inputFindUserByPhoneNumber").val();
-    if (phoneNumber && phoneNumber !== "") {
+    const phoneNumber = $('#inputFindUserByPhoneNumber').val();
+    if (phoneNumber && phoneNumber !== '') {
         const bodyAddFriend = {
             userId: user.id,
             nameUser: user.fullName,
@@ -191,21 +182,17 @@ const handleRequestAddFriend = () => {
             nameFriend: friendFinded.fullName,
         };
 
-        alert("Đã gửi lời mời kết bạn");
+        alert('Đã gửi lời mời kết bạn');
 
-        stompClientNotifycation.send(
-            "/app/notifycation/" + friendFinded.id,
-            {},
-            JSON.stringify(bodyAddFriend)
-        );
+        stompClientNotifycation.send('/app/notifycation/' + friendFinded.id, {}, JSON.stringify(bodyAddFriend));
     }
 };
 
 const handleCreateGroup = () => {
-    const groupName = $("#addGroupnameInput").val();
+    const groupName = $('#addGroupnameInput').val();
     let memberSelectedCreateGroup = [user.id];
 
-    $("input:checkbox[name=contacts]:checked").each(function () {
+    $('input:checkbox[name=contacts]:checked').each(function () {
         memberSelectedCreateGroup.push($(this).val());
     });
 
@@ -217,62 +204,53 @@ const handleCreateGroup = () => {
 
     $.ajax({
         url: `${api}/conversations`,
-        type: "POST",
+        type: 'POST',
         data: JSON.stringify(bodyCreateGroup),
         async: true,
         beforeSend: function (xhr) {
-            xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-            xhr.setRequestHeader("Accept", "application/json");
-            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+            xhr.setRequestHeader('Accept', 'application/json');
+            xhr.setRequestHeader('Content-Type', 'application/json');
         },
         success: function (result) {
-            //add conversation
-
-            alert("Tạo nhóm thành công");
-            // window.location.reload();
+            $('#addgroup-exampleModal').modal('hide');
             $.ajax({
                 url: `${api}/conversations/${result.id}`,
-                type: "GET",
+                type: 'GET',
                 async: true,
                 beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-                    xhr.setRequestHeader("Accept", "application/json");
-                    xhr.setRequestHeader("Content-Type", "application/json");
+                    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+                    xhr.setRequestHeader('Accept', 'application/json');
+                    xhr.setRequestHeader('Content-Type', 'application/json');
                 },
                 success: function (result) {
                     connectToChat(result);
 
                     const htmlConversation = `
-                            <li onClick="handleSelectConversation('${
-                                result.id
-                            }')">
+                            <li onClick="handleSelectConversation('${result.id}')">
                                 <a href="#">
-                                    <div id="conversationID_${
-                                        result.id
-                                    }" class="d-flex">
+                                    <div id="conversationID_${result.id}" class="d-flex">
                                         <div class="chat-user-img align-self-center me-3 ms-0">
                                             <div class="avatar-xs">
                                                 <span class="avatar-title rounded-circle bg-soft-primary text-primary">
-                                                        ${"U"}
+                                                        ${'U'}
                                                     </span>
                                             </div>
                                         </div>
                                         <div id="conversation_messageNotify_${
                                             result.id
                                         }" class="flex-1 overflow-hidden">
-                                            <h5 class="text-truncate font-size-15 mb-1">${
-                                                result.groupName
-                                            }</h5>
+                                            <h5 class="text-truncate font-size-15 mb-1">${result.groupName}</h5>
                                         </div>
                                     </div>
                                 </a>
                             </li>`;
-                    $("#listConversation").append(htmlConversation);
+                    $('#listConversation').append(htmlConversation);
                     conversations.push(result);
                     console.log(conversations);
                 },
                 error: function (textStatus, errorThrown) {
-                    console.log("Error: " + textStatus + errorThrown);
+                    console.log('Error: ' + textStatus + errorThrown);
                 },
             });
         },

@@ -1,33 +1,33 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js';
 import {
     getStorage,
     ref,
     getDownloadURL,
     uploadBytesResumable,
     getMetadata,
-} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-storage.js";
-let userAvatarTemporary = "";
+} from 'https://www.gstatic.com/firebasejs/9.10.0/firebase-storage.js';
+let userAvatarTemporary = '';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCtvKlXSWkHh5CN3ST4DxiLu6rxVGZDiJ4",
-    authDomain: "zala-chatapp.firebaseapp.com",
-    projectId: "zala-chatapp",
-    storageBucket: "zala-chatapp.appspot.com",
-    messagingSenderId: "721545788182",
-    appId: "1:721545788182:web:70a313a4c5934f164f2e37",
+    apiKey: 'AIzaSyCtvKlXSWkHh5CN3ST4DxiLu6rxVGZDiJ4',
+    authDomain: 'zala-chatapp.firebaseapp.com',
+    projectId: 'zala-chatapp',
+    storageBucket: 'zala-chatapp.appspot.com',
+    messagingSenderId: '721545788182',
+    appId: '1:721545788182:web:70a313a4c5934f164f2e37',
 };
-import emoji from "../assets/images/emoji2.json" assert { type: "json" };
+import emoji from '../assets/images/emoji2.json' assert { type: 'json' };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 // Initialize Cloud Storage and get a reference to the service
-const storage = getStorage(app, "gs://zala-chatapp.appspot.com");
+const storage = getStorage(app, 'gs://zala-chatapp.appspot.com');
 $(document).ready(function () {
     renderListEmoji(emoji);
-    $("#inputFile").on("change", (input) => {
+    $('#inputFile').on('change', (input) => {
         const files = input.target.files[0];
         handleSendFile(files);
     });
-    $("#sendBtn").on("click", (input) => {
+    $('#sendBtn').on('click', (input) => {
         switch (filesArr.length) {
             case 0:
                 handleSendMessage();
@@ -36,54 +36,45 @@ $(document).ready(function () {
                 handleSendMessageImage(filesArr);
                 filesArr = [];
                 console.log(filesArr);
-                ClearElementChild("listImageSelectTemporary");
+                ClearElementChild('listImageSelectTemporary');
                 break;
 
             default:
                 handleSendMessageListImage(filesArr);
                 const timeSendMessage = filesArr.length * 2000;
                 filesArr = [];
-                ClearElementChild("listImageSelectTemporary");
+                ClearElementChild('listImageSelectTemporary');
                 console.log(urlListImage);
                 setTimeout(() => {
-                    sendMessage(
-                        myMemberInConversationSelected,
-                        "listImage",
-                        urlListImage,
-                        conversationSelected
-                    );
+                    sendMessage(myMemberInConversationSelected, 'listImage', urlListImage, conversationSelected);
                 }, timeSendMessage);
 
-                urlListImage = "";
+                urlListImage = '';
 
                 break;
         }
     });
 
-    $("#messageImg").on("change", (input) => {
+    $('#messageImg').on('change', (input) => {
         const ImgTemporary = handleSelectImage(input.target.files[0]);
-        $("#userAvatar").prop("src", ImgTemporary);
+        $('#userAvatar').prop('src', ImgTemporary);
         userAvatarTemporary = input.target.files[0];
     });
-    $("#btn_updateUser").on("click", () => {
+    $('#btn_updateUser').on('click', () => {
         const storageRef = ref(storage, userAvatarTemporary.name);
-        const uploadTask = uploadBytesResumable(
-            storageRef,
-            userAvatarTemporary
-        );
+        const uploadTask = uploadBytesResumable(storageRef, userAvatarTemporary);
 
         uploadTask.on(
-            "state_changed",
+            'state_changed',
             (snapshot) => {
-                const progress =
-                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log("Upload is " + progress + "% done");
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log('Upload is ' + progress + '% done');
                 switch (snapshot.state) {
-                    case "paused":
-                        console.log("Upload is paused");
+                    case 'paused':
+                        console.log('Upload is paused');
                         break;
-                    case "running":
-                        console.log("Upload is running");
+                    case 'running':
+                        console.log('Upload is running');
                         break;
                 }
             },
@@ -103,8 +94,8 @@ function handleSelectImage(file) {
     return urlRenderTemporary;
 }
 function updateInforUser(url) {
-    const phoneNumber = $("#userInfo-update-about-phoneNumber").val();
-    const fullName = $("#userInfo-update-about-fullName").val();
+    const phoneNumber = $('#userInfo-update-about-phoneNumber').val();
+    const fullName = $('#userInfo-update-about-fullName').val();
     const updateInforUser = {
         phoneNumber: phoneNumber,
         fullName: fullName,
@@ -112,19 +103,19 @@ function updateInforUser(url) {
     };
     $.ajax({
         url: `${api}/auth/update/${user.phoneNumber}`,
-        type: "PUT",
+        type: 'PUT',
         data: JSON.stringify(updateInforUser),
         async: true,
         beforeSend: function (xhr) {
-            xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-            xhr.setRequestHeader("Accept", "application/json");
-            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+            xhr.setRequestHeader('Accept', 'application/json');
+            xhr.setRequestHeader('Content-Type', 'application/json');
         },
         success: function (result) {
             window.location.reload();
         },
         error: function (textStatus, errorThrown) {
-            console.log("Error: " + textStatus + errorThrown);
+            console.log('Error: ' + textStatus + errorThrown);
         },
     });
 }
@@ -134,19 +125,18 @@ function handleSendMessageImage(filesArr) {
     const uploadTask = uploadBytesResumable(storageRef, file);
 
     uploadTask.on(
-        "state_changed",
+        'state_changed',
         (snapshot) => {
             // Observe state change events such as progress, pause, and resume
             // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-            const progress =
-                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log("Upload is " + progress + "% done");
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
             switch (snapshot.state) {
-                case "paused":
-                    console.log("Upload is paused");
+                case 'paused':
+                    console.log('Upload is paused');
                     break;
-                case "running":
-                    console.log("Upload is running");
+                case 'running':
+                    console.log('Upload is running');
                     break;
             }
         },
@@ -158,12 +148,7 @@ function handleSendMessageImage(filesArr) {
             // For instance, get the download URL: https://firebasestorage.googleapis.com/...
 
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                sendMessage(
-                    myMemberInConversationSelected,
-                    "image",
-                    downloadURL,
-                    conversationSelected
-                );
+                sendMessage(myMemberInConversationSelected, 'image', downloadURL, conversationSelected);
             });
         }
     );
@@ -172,24 +157,20 @@ function handleSendMessageListImage(listImage) {
     (async () => {
         for (let index = 0; index < listImage.length; index++) {
             const storageRef = ref(storage, listImage[index].name);
-            const uploadTask = uploadBytesResumable(
-                storageRef,
-                listImage[index]
-            );
+            const uploadTask = uploadBytesResumable(storageRef, listImage[index]);
             await uploadTask.on(
-                "state_changed",
+                'state_changed',
                 (snapshot) => {
                     // Observe state change events such as progress, pause, and resume
                     // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                    const progress =
-                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    console.log("Upload is " + progress + "% done");
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log('Upload is ' + progress + '% done');
                     switch (snapshot.state) {
-                        case "paused":
-                            console.log("Upload is paused");
+                        case 'paused':
+                            console.log('Upload is paused');
                             break;
-                        case "running":
-                            console.log("Upload is running");
+                        case 'running':
+                            console.log('Upload is running');
                             break;
                     }
                 },
@@ -200,18 +181,16 @@ function handleSendMessageListImage(listImage) {
                 // Handle successful uploads on complete
                 // For instance, get the download URL: https://firebasestorage.googleapis.com/...
             );
-            await getDownloadURL(uploadTask.snapshot.ref).then(
-                (downloadURL) => {
-                    urlListImage += downloadURL;
-                    if (index < listImage.length - 1) {
-                        urlListImage += "+";
-                    } else {
-                        urlListImage += "";
-                    }
-
-                    console.log(urlListImage);
+            await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                urlListImage += downloadURL;
+                if (index < listImage.length - 1) {
+                    urlListImage += '+';
+                } else {
+                    urlListImage += '';
                 }
-            );
+
+                console.log(urlListImage);
+            });
             // getDownloadURL(storageRef).then((downloadURL) => {
             //   urlListImage += downloadURL;
             //   console.log(urlListImage);
@@ -220,7 +199,7 @@ function handleSendMessageListImage(listImage) {
     })();
 }
 function renderListEmoji(listEmoji) {
-    let emojiRender = "";
+    let emojiRender = '';
     listEmoji.map((emoji) => {
         emojiRender += `
       <a class="dropdown-item"  style="cursor:pointer; padding:5px !important ; height:max-content; width:max-content;" onClick="appendEmoji('${emoji}')">
@@ -228,26 +207,25 @@ function renderListEmoji(listEmoji) {
       </a>
     `;
     });
-    $("#emoji-list").append(emojiRender);
+    $('#emoji-list').append(emojiRender);
 }
 function handleSendFile(file) {
     const storageRef = ref(storage, file.name);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
     uploadTask.on(
-        "state_changed",
+        'state_changed',
         (snapshot) => {
             // Observe state change events such as progress, pause, and resume
             // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-            const progress =
-                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log("Upload is " + progress + "% done");
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
             switch (snapshot.state) {
-                case "paused":
-                    console.log("Upload is paused");
+                case 'paused':
+                    console.log('Upload is paused');
                     break;
-                case "running":
-                    console.log("Upload is running");
+                case 'running':
+                    console.log('Upload is running');
                     break;
             }
         },
@@ -260,12 +238,8 @@ function handleSendFile(file) {
                     .then((metadata) => {
                         sendMessage(
                             myMemberInConversationSelected,
-                            "file",
-                            metadata.name +
-                                "+" +
-                                formatSizeUnits(metadata.size) +
-                                "+" +
-                                downloadURL,
+                            'file',
+                            metadata.name + '+' + formatSizeUnits(metadata.size) + '+' + downloadURL,
                             conversationSelected
                         );
                     })
@@ -281,17 +255,17 @@ function handleSendFile(file) {
 }
 function formatSizeUnits(bytes) {
     if (bytes >= 1073741824) {
-        bytes = (bytes / 1073741824).toFixed(2) + " GB";
+        bytes = (bytes / 1073741824).toFixed(2) + ' GB';
     } else if (bytes >= 1048576) {
-        bytes = (bytes / 1048576).toFixed(2) + " MB";
+        bytes = (bytes / 1048576).toFixed(2) + ' MB';
     } else if (bytes >= 1024) {
-        bytes = (bytes / 1024).toFixed(2) + " KB";
+        bytes = (bytes / 1024).toFixed(2) + ' KB';
     } else if (bytes > 1) {
-        bytes = bytes + " bytes";
+        bytes = bytes + ' bytes';
     } else if (bytes == 1) {
-        bytes = bytes + " byte";
+        bytes = bytes + ' byte';
     } else {
-        bytes = "0 bytes";
+        bytes = '0 bytes';
     }
     return bytes;
 }

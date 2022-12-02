@@ -2,8 +2,8 @@
 // const client = "http://localhost:8000";
 let filesArr = new Array();
 $(document).ready(function () {
-    $("#inputImg").on("change", (input) => {
-        ClearElementChild("listImageSelectTemporary");
+    $('#inputImg').on('change', (input) => {
+        ClearElementChild('listImageSelectTemporary');
 
         const files = input.target.files;
         for (var i = 0, l = files.length; i < l; i++) {
@@ -14,7 +14,7 @@ $(document).ready(function () {
 });
 function handleRemoveFileInFileListTemporary(index) {
     filesArr.splice(index, 1);
-    ClearElementChild("listImageSelectTemporary");
+    ClearElementChild('listImageSelectTemporary');
 
     renderListImageTemporaryInScreen(filesArr);
 }
@@ -26,7 +26,7 @@ function ClearElementChild(id) {
 }
 
 function renderListImageTemporaryInScreen(arrayList) {
-    let viewImgTemporary = "";
+    let viewImgTemporary = '';
     for (let index = 0; index < arrayList.length; index++) {
         viewImgTemporary += `
             <div class="position-relative">
@@ -40,7 +40,7 @@ function renderListImageTemporaryInScreen(arrayList) {
             </div>
     `;
     }
-    $("#listImageSelectTemporary").append(viewImgTemporary);
+    $('#listImageSelectTemporary').append(viewImgTemporary);
 }
 // lấy file hình ảnh đã chọn và render tạm thời lên giao diện
 function handleSelectImage(file) {
@@ -49,22 +49,20 @@ function handleSelectImage(file) {
 }
 
 function appendEmoji(emoji) {
-    $("#message-to-send").val($("#message-to-send").val() + `${emoji}`);
+    $('#message-to-send').val($('#message-to-send').val() + `${emoji}`);
 }
-$("#oldpassword_changePassword_modal").blur(() => {
+$('#oldpassword_changePassword_modal').blur(() => {
     // console.log(user);
-    let oldPassword = document.getElementById(
-        "oldpassword_changePassword_modal"
-    ).value;
+    let oldPassword = document.getElementById('oldpassword_changePassword_modal').value;
     let bool = false;
     $.ajax({
         url: `${api}/account/filter?phoneNumber=${user.phoneNumber.slice(-11)}`,
-        type: "GET",
+        type: 'GET',
         async: true,
         beforeSend: function (xhr) {
-            xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-            xhr.setRequestHeader("Accept", "application/json");
-            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+            xhr.setRequestHeader('Accept', 'application/json');
+            xhr.setRequestHeader('Content-Type', 'application/json');
         },
         success: function (result) {
             mainAccount = result;
@@ -76,25 +74,25 @@ $("#oldpassword_changePassword_modal").blur(() => {
 
             $.ajax({
                 url: `${api}/account/checkPassword?passwordSHA256=${result.password}&password=${oldPassword}`,
-                type: "POST",
+                type: 'POST',
                 async: true,
                 beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-                    xhr.setRequestHeader("Accept", "application/json");
-                    xhr.setRequestHeader("Content-Type", "application/json");
+                    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+                    xhr.setRequestHeader('Accept', 'application/json');
+                    xhr.setRequestHeader('Content-Type', 'application/json');
                 },
                 success: function (res) {
                     if (res) {
                         bool = true;
                     }
                     if (bool) {
-                        $("#errorPassword").css("display", "none");
+                        $('#errorPassword').css('display', 'none');
                     } else {
-                        $("#errorPassword").css("display", "block");
+                        $('#errorPassword').css('display', 'block');
                     }
                 },
                 error: function (textStatus, errorThrown) {
-                    console.log("Error: " + textStatus + errorThrown);
+                    console.log('Error: ' + textStatus + errorThrown);
                     return false;
                 },
             });
@@ -109,13 +107,13 @@ $("#oldpassword_changePassword_modal").blur(() => {
             // }
         },
         error: function (textStatus, errorThrown) {
-            console.log("Error: " + textStatus + errorThrown);
+            console.log('Error: ' + textStatus + errorThrown);
             return false;
         },
     });
 });
-$("#btnChangePassword").click(() => {
-    let newPasssword = $("#password").val();
+$('#btnChangePassword').click(() => {
+    let newPasssword = $('#password').val();
 
     // const formUpdateAccount = {
     //   id: account.id,
@@ -126,32 +124,31 @@ $("#btnChangePassword").click(() => {
     mainAccount.password = newPasssword;
 
     $.ajax({
-        type: "PUT",
+        type: 'PUT',
         url: `${api}/account`,
         data: JSON.stringify(mainAccount),
         beforeSend: function (xhr) {
-            xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-            xhr.setRequestHeader("Accept", "application/json");
-            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+            xhr.setRequestHeader('Accept', 'application/json');
+            xhr.setRequestHeader('Content-Type', 'application/json');
         },
         success: function () {
-            alert("Cap nhat thanh cong");
-            // window.location.href = `${client}/login`;
+            $('#change-password-modal').modal('hide');
         },
         async: true,
     });
 });
 const checkConfirmPassword = () => {
-    let password = document.getElementById("password").value;
-    let confirmPassword = document.getElementById("confirmPassword").value;
+    let password = document.getElementById('password').value;
+    let confirmPassword = document.getElementById('confirmPassword').value;
 
     return password === confirmPassword ? true : false;
 };
 
-$("#confirmPassword").blur(() => {
+$('#confirmPassword').blur(() => {
     if (checkConfirmPassword()) {
-        $("#errorPasswordConfirm").css("display", "none");
+        $('#errorPasswordConfirm').css('display', 'none');
     } else {
-        $("#errorPasswordConfirm").css("display", "block");
+        $('#errorPasswordConfirm').css('display', 'block');
     }
 });

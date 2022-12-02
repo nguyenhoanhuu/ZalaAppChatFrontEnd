@@ -1,13 +1,13 @@
-const api = "http://localhost:8080";
-const client = "http://localhost:8000";
+const api = 'http://localhost:8080';
+const client = 'http://localhost:8000';
 
 $(document).ready(function () {
-    let form = document.getElementById("formLogin");
-    form.addEventListener("submit", (event) => {
+    let form = document.getElementById('formLogin');
+    form.addEventListener('submit', (event) => {
         event.preventDefault();
 
-        let phoneNumber = form.elements["phoneNumber"].value;
-        let password = form.elements["password"].value;
+        let phoneNumber = form.elements['phoneNumber'].value;
+        let password = form.elements['password'].value;
 
         let loginData = {
             phoneNumber: phoneNumber,
@@ -16,27 +16,24 @@ $(document).ready(function () {
 
         $.ajax({
             url: `${api}/auth/login`,
-            type: "POST",
+            type: 'POST',
             data: JSON.stringify(loginData),
             async: true,
             beforeSend: function (xhr) {
-                xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-                xhr.setRequestHeader("Accept", "application/json");
-                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+                xhr.setRequestHeader('Accept', 'application/json');
+                xhr.setRequestHeader('Content-Type', 'application/json');
             },
             success: function (result) {
                 if (result.userId) {
-                    localStorage.setItem("userId", result.userId);
+                    localStorage.setItem('userId', result.userId);
                     window.location.href = `${client}/home`;
                 } else {
-                    // $("#notifycationLogin").html(() => {
-                    //     return "Tài khoản hoặc mật khẩu không hợp lệ";
-                    // });
-                    alert("tai khaon mat khau khong dungh");
+                    alert('tai khaon mat khau khong dungh');
                 }
             },
             error: function (textStatus, errorThrown) {
-                console.log("Error: " + textStatus + errorThrown);
+                console.log('Error: ' + textStatus + errorThrown);
             },
         });
     });

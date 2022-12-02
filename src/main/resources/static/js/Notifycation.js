@@ -1,17 +1,17 @@
 let stompClientNotifycation;
 
 $(document).ready(function () {
-  (async () => {
-    let socket = new SockJS(api + "/notifycation");
-    stompClientNotifycation = Stomp.over(socket);
-    await stompClientNotifycation.connect({}, function (frame) {
-      console.log("connected to notifycation user: " + frame);
-      stompClientNotifycation.subscribe(
-        "/topic/notifycation/" + localStorage.getItem("userId"),
-        function (response) {
-          let request = JSON.parse(response.body);
+    (async () => {
+        let socket = new SockJS(api + '/notifycation');
+        stompClientNotifycation = Stomp.over(socket);
+        await stompClientNotifycation.connect({}, function (frame) {
+            console.log('connected to notifycation user: ' + frame);
+            stompClientNotifycation.subscribe(
+                '/topic/notifycation/' + localStorage.getItem('userId'),
+                function (response) {
+                    let request = JSON.parse(response.body);
 
-          let htmlAddFriendRequest = `
+                    let htmlAddFriendRequest = `
                     <li id="addFriendRequest_${request.id}" href="#" class="list-group-item text-left d-flex">
                         <div class="chat-user-img align-self-center me-3 ms-0">
                             <div class="avatar-xs">
@@ -30,29 +30,27 @@ $(document).ready(function () {
                     </li>
                     `;
 
-          $("#listAddFriendRequest").append(htmlAddFriendRequest);
-        }
-      );
-    });
-  })();
+                    $('#listAddFriendRequest').append(htmlAddFriendRequest);
+                }
+            );
+        });
+    })();
 
-  $.ajax({
-    url: `${api}/notifycation/addFriendRequest/${localStorage.getItem(
-      "userId"
-    )}`,
-    type: "GET",
-    async: true,
-    beforeSend: function (xhr) {
-      xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-      xhr.setRequestHeader("Accept", "application/json");
-      xhr.setRequestHeader("Content-Type", "application/json");
-    },
-    success: function (result) {
-      let htmlAddFriendRequest = "";
-      result.map((request) => {
-        htmlAddFriendRequest =
-          htmlAddFriendRequest +
-          `
+    $.ajax({
+        url: `${api}/notifycation/addFriendRequest/${localStorage.getItem('userId')}`,
+        type: 'GET',
+        async: true,
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+            xhr.setRequestHeader('Accept', 'application/json');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+        },
+        success: function (result) {
+            let htmlAddFriendRequest = '';
+            result.map((request) => {
+                htmlAddFriendRequest =
+                    htmlAddFriendRequest +
+                    `
                 <li id="addFriendRequest_${request.id}" href="#" class="list-group-item text-left d-flex">
                     <div class="chat-user-img align-self-center me-3 ms-0">
                         <div class="avatar-xs">
@@ -70,12 +68,12 @@ $(document).ready(function () {
                     </label>
                 </li>
                 `;
-      });
+            });
 
-      $("#listAddFriendRequest").append(htmlAddFriendRequest);
-    },
-    error: function (textStatus, errorThrown) {
-      console.log("Error: " + textStatus + errorThrown);
-    },
-  });
+            $('#listAddFriendRequest').append(htmlAddFriendRequest);
+        },
+        error: function (textStatus, errorThrown) {
+            console.log('Error: ' + textStatus + errorThrown);
+        },
+    });
 });
